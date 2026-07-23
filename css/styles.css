@@ -1,0 +1,765 @@
+/* ========================================================================
+   Calculator — Glassmorphism Dark-Mode Stylesheet
+   ======================================================================== */
+
+/* ----- CSS Custom Properties (Design Tokens) ----- */
+:root {
+  /* Background */
+  --bg-primary: #06060f;
+  --bg-secondary: #0d0d1f;
+
+  /* Glass surfaces */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-hover: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Text */
+  --text-primary: #f0f0f5;
+  --text-secondary: rgba(240, 240, 245, 0.55);
+  --text-muted: rgba(240, 240, 245, 0.3);
+
+  /* Accent palette */
+  --accent: #6c63ff;
+  --accent-glow: rgba(108, 99, 255, 0.35);
+  --accent-hover: #8078ff;
+  --equals-bg: linear-gradient(135deg, #6c63ff 0%, #a855f7 100%);
+  --equals-hover: linear-gradient(135deg, #8078ff 0%, #b86dfc 100%);
+
+  /* Operator accent */
+  --op-text: #c084fc;
+  --op-bg: rgba(192, 132, 252, 0.08);
+  --op-bg-hover: rgba(192, 132, 252, 0.15);
+  --op-border: rgba(192, 132, 252, 0.15);
+
+  /* Function keys */
+  --fn-text: #38bdf8;
+  --fn-bg: rgba(56, 189, 248, 0.06);
+  --fn-bg-hover: rgba(56, 189, 248, 0.12);
+  --fn-border: rgba(56, 189, 248, 0.12);
+
+  /* Numeric keys */
+  --num-bg: rgba(255, 255, 255, 0.04);
+  --num-bg-hover: rgba(255, 255, 255, 0.08);
+  --num-border: rgba(255, 255, 255, 0.06);
+
+  /* Feedback */
+  --error-text: #f87171;
+  --success-text: #34d399;
+
+  /* Spacing */
+  --gap: 12px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 150ms var(--ease-out);
+  --transition-normal: 300ms var(--ease-out);
+  --transition-slow: 500ms var(--ease-out);
+
+  /* Typography */
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+}
+
+/* ----- Reset ----- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ========================================================================
+   Animated Background Orbs
+   ======================================================================== */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.45;
+  will-change: transform;
+}
+
+.orb--1 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #6c63ff 0%, transparent 70%);
+  top: -10%;
+  left: -5%;
+  animation: float-1 18s ease-in-out infinite;
+}
+
+.orb--2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+  bottom: -8%;
+  right: -8%;
+  animation: float-2 22s ease-in-out infinite;
+}
+
+.orb--3 {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
+  top: 50%;
+  left: 60%;
+  animation: float-3 15s ease-in-out infinite;
+}
+
+.orb--4 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, #f472b6 0%, transparent 70%);
+  top: 30%;
+  left: 15%;
+  animation: float-4 20s ease-in-out infinite;
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(60px, 40px) scale(1.08); }
+  66%      { transform: translate(-30px, 70px) scale(0.95); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(-50px, -50px) scale(1.1); }
+  66%      { transform: translate(40px, -30px) scale(0.92); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-80px, -60px) scale(1.12); }
+}
+
+@keyframes float-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(50px, 50px) scale(1.05); }
+}
+
+/* ========================================================================
+   Calculator Shell
+   ======================================================================== */
+.calculator {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(40px) saturate(1.4);
+  -webkit-backdrop-filter: blur(40px) saturate(1.4);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: calc-enter 0.6s var(--ease-out) both;
+}
+
+@keyframes calc-enter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+}
+
+/* ========================================================================
+   Display
+   ======================================================================== */
+.display {
+  padding: 20px 16px 16px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.display__expression {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  text-align: right;
+  min-height: 1.4em;
+  word-break: break-all;
+  transition: color var(--transition-fast);
+  padding-right: 32px; /* room for copy button */
+}
+
+.display__result-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 8px;
+  position: relative;
+}
+
+.display__result {
+  font-family: var(--font-mono);
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: right;
+  line-height: 1.15;
+  word-break: break-all;
+  flex: 1;
+  transition: font-size var(--transition-normal), color var(--transition-fast);
+}
+
+/* Shrink large numbers */
+.display__result.shrink-1 { font-size: 2.1rem; }
+.display__result.shrink-2 { font-size: 1.7rem; }
+.display__result.shrink-3 { font-size: 1.35rem; }
+
+/* Error state */
+.display__result.error {
+  color: var(--error-text);
+  font-size: 1.4rem;
+}
+
+/* Copy button */
+.display__copy-btn {
+  position: relative;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.display__copy-btn:hover {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.display__copy-btn:active {
+  transform: scale(0.9);
+}
+
+/* Copy tooltip */
+.copy-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--success-text);
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.copy-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================================================
+   Keypad Grid
+   ======================================================================== */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+/* ----- Base Key ----- */
+.key {
+  position: relative;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--num-bg);
+  border: 1px solid var(--num-border);
+  color: var(--text-primary);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.key::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.key:hover {
+  background: var(--num-bg-hover);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.key:active {
+  transform: scale(0.94);
+}
+
+.key:active::after {
+  opacity: 1;
+}
+
+/* Visual press feedback via JS */
+.key.pressed {
+  transform: scale(0.94);
+}
+
+.key.pressed::after {
+  opacity: 1;
+}
+
+/* ----- Function Keys (AC, +/-, %) ----- */
+.key--fn {
+  background: var(--fn-bg);
+  border-color: var(--fn-border);
+  color: var(--fn-text);
+}
+
+.key--fn:hover {
+  background: var(--fn-bg-hover);
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
+/* ----- Operator Keys (÷, ×, −, +) ----- */
+.key--op {
+  background: var(--op-bg);
+  border-color: var(--op-border);
+  color: var(--op-text);
+}
+
+.key--op:hover {
+  background: var(--op-bg-hover);
+  border-color: rgba(192, 132, 252, 0.25);
+}
+
+/* Active operator highlight */
+.key--op.active {
+  background: rgba(192, 132, 252, 0.2);
+  border-color: rgba(192, 132, 252, 0.4);
+  box-shadow: 0 0 20px rgba(192, 132, 252, 0.15);
+}
+
+/* ----- Equals Key ----- */
+.key--equals {
+  background: var(--equals-bg);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.key--equals:hover {
+  background: var(--equals-hover);
+  box-shadow: 0 6px 28px rgba(108, 99, 255, 0.45);
+}
+
+/* ----- Wide Key (0) ----- */
+.key--wide {
+  grid-column: span 2;
+}
+
+/* ========================================================================
+   History Toggle Button
+   ======================================================================== */
+.history-toggle {
+  position: absolute;
+  top: 22px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.history-toggle:hover {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.history-toggle:active {
+  transform: scale(0.9);
+}
+
+/* ========================================================================
+   History Panel (Slide-in Drawer)
+   ======================================================================== */
+.history-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 340px;
+  max-width: 90vw;
+  z-index: 100;
+  background: rgba(10, 10, 26, 0.85);
+  backdrop-filter: blur(40px) saturate(1.3);
+  -webkit-backdrop-filter: blur(40px) saturate(1.3);
+  border-left: 1px solid var(--glass-border);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--transition-normal);
+}
+
+.history-panel.open {
+  transform: translateX(0);
+}
+
+.history-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.history-panel__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.history-panel__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.history-panel__clear-btn,
+.history-panel__close-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.history-panel__clear-btn:hover,
+.history-panel__close-btn:hover {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* History list */
+.history-panel__list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styling */
+.history-panel__list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.history-panel__list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.history-panel__list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+/* Empty state */
+.history-panel__empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* History item */
+.history-item {
+  padding: 14px 16px;
+  margin-bottom: 6px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+  animation: history-enter 0.3s var(--ease-out) both;
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.history-item:active {
+  transform: scale(0.98);
+}
+
+@keyframes history-enter {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+.history-item__expression {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.history-item__result {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+/* ========================================================================
+   Backdrop Overlay
+   ======================================================================== */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ========================================================================
+   Keyboard Shortcut Hint (Footer)
+   ======================================================================== */
+.shortcut-hint {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  opacity: 0;
+  animation: hint-fade 0.8s 1.2s var(--ease-out) forwards;
+}
+
+@keyframes hint-fade {
+  to { opacity: 1; }
+}
+
+.shortcut-hint kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+}
+
+/* ========================================================================
+   Responsive — Mobile
+   ======================================================================== */
+@media (max-width: 480px) {
+  body {
+    justify-content: flex-end;
+    padding-bottom: 12px;
+  }
+
+  .calculator {
+    max-width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-md) var(--radius-md);
+    margin: 0 8px;
+    padding: 16px;
+  }
+
+  .display {
+    padding: 16px 12px 12px;
+    min-height: 95px;
+  }
+
+  .display__result {
+    font-size: 2.2rem;
+  }
+
+  .display__result.shrink-1 { font-size: 1.8rem; }
+  .display__result.shrink-2 { font-size: 1.5rem; }
+  .display__result.shrink-3 { font-size: 1.2rem; }
+
+  .key {
+    height: 58px;
+    font-size: 1.15rem;
+    border-radius: 10px;
+  }
+
+  .keypad {
+    gap: 10px;
+  }
+
+  /* Hide keyboard shortcut hint on mobile */
+  .shortcut-hint {
+    display: none;
+  }
+
+  /* Reduce orb sizes on mobile to save GPU */
+  .orb--1 { width: 250px; height: 250px; }
+  .orb--2 { width: 200px; height: 200px; }
+  .orb--3 { width: 160px; height: 160px; }
+  .orb--4 { width: 120px; height: 120px; }
+}
+
+@media (max-width: 360px) {
+  .key {
+    height: 52px;
+    font-size: 1.05rem;
+  }
+
+  .keypad {
+    gap: 8px;
+  }
+
+  .display__result {
+    font-size: 2rem;
+  }
+}
+
+/* Tall phone screens — add top padding */
+@media (min-height: 750px) and (max-width: 480px) {
+  body {
+    justify-content: center;
+    padding-bottom: 0;
+  }
+}
+
+/* ========================================================================
+   Accessibility — Focus-Visible
+   ======================================================================== */
+.key:focus-visible,
+.display__copy-btn:focus-visible,
+.history-toggle:focus-visible,
+.history-panel__clear-btn:focus-visible,
+.history-panel__close-btn:focus-visible,
+.history-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ========================================================================
+   Reduce Motion Preference
+   ======================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .orb {
+    animation: none !important;
+  }
+}
