@@ -1,11 +1,10 @@
-# Calculator — Modern Glassmorphism
+# Calculator 
 
 A beautiful, production-quality calculator web app built with pure HTML, CSS, and JavaScript.
 
 ## Features
 
-- **Glassmorphism UI** — frosted-glass surfaces with animated gradient orbs
-- **Dark Mode** — carefully tuned dark palette with accent colors
+- **Dark Mode** — carefully tuned dark palette with accent colors for the new generation whose eyes hurt 
 - **Responsive** — adapts to any screen size, from 320px phones to ultrawide monitors
 - **Keyboard Support** — full number, operator, Enter, Escape, and Backspace mapping
 - **History Panel** — slide-in drawer with localStorage persistence (up to 50 entries)
